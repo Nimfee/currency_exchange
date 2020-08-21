@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Converter{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Converter</h1>
+        <div class="form-group">
+            <label for="currencyFrom">Currency From</label>
+            <select class="form-control col-3 mb-2" id="currencyFrom">
+                {% for currency in currencies %}
+                    <option value={{currency.id}}>{{ currency.ISO_code}}</option>
+                {% endfor %}
+            </select>
+            <small id="currencyFrom_error" class="form-text text-danger"></small>
+            <label for="conversionAmount">Conversion amount</label>
+            <input class="form-text text-muted col-3 mb-2" type="number" id="conversionAmount" placeholder="Enter conversion amount"></input>
+            <small id="conversionAmount_error" class="form-text text-danger"></small>
+            <label for="currencyTo">Currency To</label>
+            <select class="form-control col-3 mb-2" id="currencyTo">
+                {% for currency in currencies %}
+                    <option value={{currency.id}}>{{ currency.ISO_code}}</option>
+                {% endfor %}
+            </select>
+            <small id="currencyTo_error" class="form-text text-danger"></small>
+            <button id="convert" type="button" class="btn btn-primary mt-2">Convert</div>
+        <div style="display: none;" id="result-container">
+            <h1>Result</h1>
+            <div class="result"></div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $("#convert").click(function() {
+            $('#result-container').hide()
+            $('.text-danger').html('')
+
+            axios.post('/converter/convert', {
+                        currencyFrom: $('#currencyFrom').val(),
+                        currencyTo: $('#currencyTo').val(),
+                        conversionAmount: $('#conversionAmount').val()
+                    })
+                    .then(function (response) {
+                        if (response.data.errorMessages) {
+                            for (const [key, value] of Object.entries(response.data.errorMessages)) {
+                                $(`#${key}_error`).html(value)
+                            }
+                        } else {
+                            $('#result-container').show().children('.result').html(response.data.result)
+                        }
+                    })
+                    .catch(function (error) {
+                        $('#result-container').show().children('.result').html(error)
+                    });
+        });
+    </script>
+{% endblock %}
