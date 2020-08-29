@@ -11,6 +11,7 @@ use App\Entity\Source;
 use App\Repository\SourceRepository;
 use App\Service\CurlService;
 use App\Service\Import\Importer;
+use App\Service\Import\Parser\CurrencyExchangeRate\ParserFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -70,8 +71,17 @@ class ImportDataCommand extends Command
         foreach ($sources as $source) {
             $output->writeln("<info>Starting import from {$source->getUrl()}</info>");
             $resource = $this->curlService->executeRequest('GET', $source->getUrl());
-    
-            $result = $this->importer->processData($resource, $source->getCurrency()->getISOCode());
+
+            if (strpos($source->getUrl(), ParserFactory::PARSER_BPI) !== false) {
+                $sourceType = ParserFactory::PARSER_BPI;
+            } elseif (strpos($source->getUrl(), ParserFactory::PARSER_ECB) !== false) {
+                $sourceType = ParserFactory::PARSER_ECB;
+            }
+            $result = $this->importer->processData(
+                $resource,
+                $source->getCurrency()->getISOCode(),
+                $sourceType ?? ''
+            );
             $output->writeln("<info>Imported $result items</info>");
         }
 

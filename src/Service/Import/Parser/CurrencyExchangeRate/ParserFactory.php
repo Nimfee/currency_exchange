@@ -2,12 +2,10 @@
 
 namespace App\Service\Import\Parser\CurrencyExchangeRate;
 
-use App\Service\Import\Parser\ParserInterface;
-
 class ParserFactory
 {
-    const PARSER_ECB = 'text/xml';
-    const PARSER_BPI = 'application/javascript';
+    const PARSER_ECB = 'ecb';
+    const PARSER_BPI = 'bpi';
 
     /**
      * @var ParserBpi $parserBpi
@@ -19,19 +17,20 @@ class ParserFactory
      */
     protected $parserEcb;
 
-    public function __construct(ParserBpi $parserBpi, ParserEcb $parserEcb)
+    public function __construct(iterable $parsers)
     {
-        $this->parserBpi = $parserBpi;
-        $this->parserEcb = $parserEcb;
+        $handlers = iterator_to_array($parsers);
+        $this->parserBpi = $handlers['bpi'];
+        $this->parserEcb = $handlers['ecb'];
     }
 
     /**
-     * @param string $type
-     * @return ParserInterface
+     * @param string $sourceType
+     * @return ParserBpi|ParserEcb|array
      */
-    public function create($type)
+    public function create(string $sourceType)
     {
-        switch (strtolower($type)) {
+        switch (strtolower($sourceType)) {
             case self::PARSER_ECB:
                 return $this->parserEcb;
             case self::PARSER_BPI:

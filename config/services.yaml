@@ -32,5 +32,13 @@ services:
 
     logger: { class: Psr\Log\NullLogger }
 
+    App\Service\Import\Parser\CurrencyExchangeRate\ParserBpi:
+        tags:
+            - { name: 'app.parser.currency_exchange', key: 'bpi' }
 
-    App\Service\Import\Builder\CurrencyExchangeRate\BuilderService: ~
+    App\Service\Import\Parser\CurrencyExchangeRate\ParserEcb:
+        tags:
+            - { name: 'app.parser.currency_exchange', key: 'ecb' }
+
+    App\Service\Import\Parser\CurrencyExchangeRate\ParserFactory:
+        arguments: [!tagged { tag: 'app.parser.currency_exchange', index_by: 'key' }]

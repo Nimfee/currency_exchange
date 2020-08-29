@@ -29,13 +29,13 @@ class ParserManager
      *
      * @param ResponseInterface $resource
      * @param string $currencyTo
+     * @param string $sourceType
      *
      * @return array
      */
-    public function getData($resource, $currencyTo)
+    public function getData(ResponseInterface $resource, string $currencyTo, string $sourceType)
     {
-        $type = $resource->getHeaderLine('content-type');
-        $parser = $this->parserFactory->create($type);
+        $parser = $this->parserFactory->create($sourceType);
 
         return $parser->parse($resource->getBody(), $currencyTo);
     }

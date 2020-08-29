@@ -12,21 +12,21 @@ use Exception;
  */
 trait TimeStampableTrait
 {
-	/**
-	 * @ORM\Column(type="datetime")
-	 */
-	private $createdAt;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
 
-	/**
-	 * @ORM\Column(type="datetime")
-	 */
-	private $updatedAt;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
 
-	/**
-	 * @return DateTimeInterface|null
-	 * @throws Exception
-	 */
-	public function getCreatedAt(): ?DateTimeInterface
+    /**
+     * @return DateTimeInterface|null
+     * @throws Exception
+     */
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt ?? new DateTime();
     }
@@ -37,9 +37,9 @@ trait TimeStampableTrait
  */
 public function setCreatedAt(DateTimeInterface $createdAt): self
 {
-	$this->createdAt = $createdAt;
+    $this->createdAt = $createdAt;
 
-	return $this;
+    return $this;
 }
 
 /**
@@ -47,7 +47,7 @@ public function setCreatedAt(DateTimeInterface $createdAt): self
  */
 public function getUpdatedAt(): ?DateTimeInterface
     {
-	    return $this->updatedAt ?? new DateTime();
+        return $this->updatedAt ?? new DateTime();
     }
 
     /**
@@ -56,9 +56,9 @@ public function getUpdatedAt(): ?DateTimeInterface
      */
     public function setUpdatedAt(DateTimeInterface $updatedAt): self
 {
-	$this->updatedAt = $updatedAt;
+    $this->updatedAt = $updatedAt;
 
-	return $this;
+    return $this;
 }
 
     /**
@@ -67,10 +67,10 @@ public function getUpdatedAt(): ?DateTimeInterface
      */
     public function updateTimestamps(): void
 {
-	$now = new DateTime();
-	$this->setUpdatedAt($now);
-	if ($this->getId() === null) {
-		$this->setCreatedAt($now);
-	}
+    $now = new DateTime();
+    $this->setUpdatedAt($now);
+    if ($this->getId() === null) {
+        $this->setCreatedAt($now);
+    }
 }
 }

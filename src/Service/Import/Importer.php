@@ -31,13 +31,14 @@ class Importer
     /**
      * @param $resource
      * @param string $currency
+     * @param string $sourceType
      * @return void|null
      */
-    public function processData($resource, string $isoCode)
+    public function processData($resource, string $isoCode, string $sourceType)
     {
-        $data = $this->parserManager->getData($resource, $isoCode);
+        $data = $this->parserManager->getData($resource, $isoCode, $sourceType);
 
-        if (empty($data)) {
+        if (count($data) === 0) {
             return null;
         }
 
