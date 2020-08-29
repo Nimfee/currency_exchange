@@ -47,9 +47,8 @@ class CurlService
             $result = $this->client->request($httpMethod, $path, $headers);
         } catch (GuzzleException $e) {
             $this->logger->error('GuzzleException error: '.$e->getMessage());
-            $result = null;
         }
 
-        return $result;
+        return $result ?? null;
     }
 }
