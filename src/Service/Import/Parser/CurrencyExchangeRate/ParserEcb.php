@@ -3,20 +3,14 @@
 namespace App\Service\Import\Parser\CurrencyExchangeRate;
 
 use App\Service\Import\Parser\ParserInterface;
-use Psr\Log\LoggerInterface;
 
 class ParserEcb implements ParserInterface
 {
-    /** @var LoggerInterface  */
-    protected $logger;
-
     /**
      * ReaderXml constructor.
-     * @param LoggerInterface $logger
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct()
     {
-        $this->logger = $logger;
     }
 
     /**

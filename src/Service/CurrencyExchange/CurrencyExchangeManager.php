@@ -5,25 +5,20 @@ namespace App\Service\CurrencyExchange;
 use App\Entity\CurrencyExchangeRate;
 use App\Repository\CurrencyExchangeRateRepository;
 use App\Repository\CurrencyRepository;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Constraints\Date;
 
 class CurrencyExchangeManager
 {
-    /** @var LoggerInterface  */
-    protected $logger;
     
     /** @var CurrencyRepository  */
     protected $currencyExchangeRateRepository;
 
     /**
      * CurrencyExchangeManager constructor.
-     * @param LoggerInterface $logger
      * @param CurrencyExchangeRateRepository $currencyExchangeRateRepository
      */
-    public function __construct(LoggerInterface $logger, CurrencyExchangeRateRepository $currencyExchangeRateRepository)
+    public function __construct(CurrencyExchangeRateRepository $currencyExchangeRateRepository)
     {
-        $this->logger = $logger;
         $this->currencyExchangeRateRepository = $currencyExchangeRateRepository;
     }
 

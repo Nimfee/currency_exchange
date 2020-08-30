@@ -3,15 +3,11 @@
 namespace App\Service\Import\Parser\CurrencyExchangeRate;
 
 use App\Service\Import\Parser\ParserInterface;
-use Psr\Log\LoggerInterface;
 
 class ParserBpi implements ParserInterface
 {
-    protected $logger;
-
-    public function __construct(LoggerInterface $logger)
+    public function __construct()
     {
-        $this->logger = $logger;
     }
     
     /**

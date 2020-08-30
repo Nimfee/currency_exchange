@@ -34,7 +34,7 @@ services:
 
     App\Service\Import\Parser\CurrencyExchangeRate\ParserBpi:
         tags:
-            - { name: 'app.parser.currency_exchange', key: 'bpi' }
+            - { name: 'app.parser.currency_exchange', key: 'bpi', alias: 'bpi' }
 
     App\Service\Import\Parser\CurrencyExchangeRate\ParserEcb:
         tags:
