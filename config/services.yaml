@@ -42,3 +42,10 @@ services:
 
     App\Service\Import\Parser\CurrencyExchangeRate\ParserFactory:
         arguments: [!tagged { tag: 'app.parser.currency_exchange', index_by: 'key' }]
+
+
+    App\Service\Client\CurlService:
+        tags:
+            - { name: 'app.client', key: 'curl' }
+    App\Service\Client\ClientFactory:
+        arguments: [!tagged { tag: 'app.client', index_by: 'key' }]

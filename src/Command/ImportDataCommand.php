@@ -7,6 +7,8 @@
  */
 namespace App\Command;
 
+use App\Client\Service\ClientFactory;
+use App\Client\Service\ClientManager;
 use App\Entity\Source;
 use App\Repository\SourceRepository;
 use App\Service\CurlService;
@@ -41,9 +43,9 @@ class ImportDataCommand extends Command
     private $sourceRepository;
 
     /**
-     * @var CurlService
+     * @var ClientManager
      */
-    private $curlService;
+    private $clientManager;
 
     /**
      * @var Importer
@@ -53,12 +55,12 @@ class ImportDataCommand extends Command
     public function __construct(
         SourceRepository $sourceRepository,
         Importer $importer,
-        CurlService $curlService
+        ClientManager $clientManager
     )
     {
         $this->sourceRepository = $sourceRepository;
         $this->importer = $importer;
-        $this->curlService = $curlService;
+        $this->clientManager = $clientManager;
 
         parent::__construct();
     }
@@ -70,7 +72,11 @@ class ImportDataCommand extends Command
         /** @var Source $source */
         foreach ($sources as $source) {
             $output->writeln("<info>Starting import from {$source->getUrl()}</info>");
-            $resource = $this->curlService->executeRequest('GET', $source->getUrl());
+            $resource = $this->clientManager->executeRequest(
+                'GET',
+                $source->getUrl(),
+                ClientFactory::CLIENT_CURL
+            );
 
             if (strpos($source->getUrl(), ParserFactory::PARSER_BPI) !== false) {
                 $sourceType = ParserFactory::PARSER_BPI;

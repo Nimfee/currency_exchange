@@ -2,7 +2,6 @@
 
 namespace App\Service\Import;
 
-use App\Entity\Currency;
 use App\Service\Import\Builder\CurrencyExchangeRate\BuilderService;
 use App\Service\Import\Parser\CurrencyExchangeRate\ParserManager;
 
@@ -30,7 +29,7 @@ class Importer
     
     /**
      * @param $resource
-     * @param string $currency
+     * @param string $isoCode
      * @param string $sourceType
      * @return void|null
      */
