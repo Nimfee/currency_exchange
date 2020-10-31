@@ -2,8 +2,7 @@
 
 namespace App\Service\Import;
 
-use App\Entity\Currency;
-use App\Service\Import\Builder\CurrencyExchangeRate\BuilderService;
+use App\Service\Import\Builder\CurrencyExchangeRate\BuilderCurrencyExchange;
 use App\Service\Import\Parser\CurrencyExchangeRate\ParserManager;
 
 class Importer
@@ -14,15 +13,15 @@ class Importer
     protected $parserManager;
 
     /**
-     * @var BuilderService $builderService
+     * @var BuilderCurrencyExchange $builderService
      */
     protected $builderService;
 
     /**
      * @param ParserManager $parserManager
-     * @param BuilderService $builderService
+     * @param BuilderCurrencyExchange $builderService
      */
-    public function __construct(ParserManager $parserManager, BuilderService $builderService)
+    public function __construct(ParserManager $parserManager, BuilderCurrencyExchange $builderService)
     {
         $this->parserManager = $parserManager;
         $this->builderService = $builderService;

@@ -8,7 +8,7 @@ use App\Repository\CurrencyExchangeRateRepository;
 use App\Repository\CurrencyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class BuilderService
+class BuilderCurrencyExchange
 {
     /** @var EntityManagerInterface  */
     protected $entityManager;
