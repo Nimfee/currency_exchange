@@ -27,7 +27,7 @@ class BuilderFactory
             case self::BUILDER_CE:
                 return $this->builderCE;
             default:
-                throw new \InvalidArgumentException('Missing reader type');
+                throw new \InvalidArgumentException('Missing builder type');
         }
     }
 }

@@ -42,3 +42,11 @@ services:
 
     App\Service\Import\Parser\CurrencyExchangeRate\ParserFactory:
         arguments: [!tagged { tag: 'app.parser.currency_exchange', index_by: 'key' }]
+
+
+    App\Service\Import\Builder\CurrencyExchangeRate\BuilderCurrencyExchange:
+        tags:
+            - { name: 'app.builder.currency_exchange', key: 'currency_exchange' }
+
+    App\Service\Import\Builder\CurrencyExchangeRate\BuilderFactory:
+        arguments: [!tagged { tag: 'app.builder.currency_exchange', index_by: 'key' }]

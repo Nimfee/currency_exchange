@@ -12,9 +12,6 @@ class ParserManager
     /** @var ParserFactory  */
     protected $parserFactory;
 
-    /** @var  string */
-    protected $readerType;
-
     /**
      * ParserManager constructor.
      * @param ParserFactory $parserFactory

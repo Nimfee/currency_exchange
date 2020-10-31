@@ -2,7 +2,7 @@
 
 namespace App\Service\Import;
 
-use App\Service\Import\Builder\CurrencyExchangeRate\BuilderCurrencyExchange;
+use App\Service\Import\Builder\CurrencyExchangeRate\BuilderManager;
 use App\Service\Import\Parser\CurrencyExchangeRate\ParserManager;
 
 class Importer
@@ -13,27 +13,28 @@ class Importer
     protected $parserManager;
 
     /**
-     * @var BuilderCurrencyExchange $builderService
+     * @var BuilderManager $builderManager
      */
-    protected $builderService;
+    protected $builderManager;
 
     /**
      * @param ParserManager $parserManager
-     * @param BuilderCurrencyExchange $builderService
+     * @param BuilderManager $builderManager
      */
-    public function __construct(ParserManager $parserManager, BuilderCurrencyExchange $builderService)
+    public function __construct(ParserManager $parserManager, BuilderManager $builderManager)
     {
         $this->parserManager = $parserManager;
-        $this->builderService = $builderService;
+        $this->builderManager = $builderManager;
     }
     
     /**
      * @param $resource
      * @param string $currency
      * @param string $sourceType
+     * @param string $clientType
      * @return void|null
      */
-    public function processData($resource, string $isoCode, string $sourceType)
+    public function processData($resource, string $isoCode, string $sourceType, string $builderType)
     {
         $data = $this->parserManager->getData($resource, $isoCode, $sourceType);
 
@@ -41,6 +42,6 @@ class Importer
             return null;
         }
 
-        return $this->builderService->createEntities($data);
+        return $this->builderManager->createEntities($data, $builderType);
     }
 }

@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Service\Import\Builder\CurrencyExchangeRate;
-use App\Entity\Currency;
-use Psr\Http\Message\ResponseInterface;
+
 
 /**
  * Class File.
@@ -12,31 +11,27 @@ class BuilderManager
     /** @var BuilderFactory  */
     protected $parserFactory;
 
-    /** @var  string */
-    protected $readerType;
-
     /**
      * ParserManager constructor.
-     * @param BuilderFactory $parserFactory
+     * @param BuilderFactory $builderFactory
      */
-    public function __construct(BuilderFactory $parserFactory)
+    public function __construct(BuilderFactory $builderFactory)
     {
-        $this->parserFactory = $parserFactory;
+        $this->builderFactory = $builderFactory;
     }
 
     /**
      * Parses given resource and returns raw data.
      *
-     * @param ResponseInterface $resource
-     * @param string $currencyTo
-     * @param string $sourceType
+     * @param array $data
+     * @param string $builderType
      *
      * @return array
      */
-    public function getData(ResponseInterface $resource, string $currencyTo, string $sourceType)
+    public function createEntities(array $data, string $builderType)
     {
-        $parser = $this->parserFactory->create($sourceType);
+        $builder = $this->builderFactory->create($builderType);
 
-        return $parser->parse($resource->getBody(), $currencyTo);
+        return $builder->createEntities($data);
     }
 }

@@ -10,6 +10,7 @@ namespace App\Command;
 use App\Entity\Source;
 use App\Repository\SourceRepository;
 use App\Service\CurlService;
+use App\Service\Import\Builder\CurrencyExchangeRate\BuilderFactory;
 use App\Service\Import\Importer;
 use App\Service\Import\Parser\CurrencyExchangeRate\ParserFactory;
 use Symfony\Component\Console\Command\Command;
@@ -80,7 +81,8 @@ class ImportDataCommand extends Command
             $result = $this->importer->processData(
                 $resource,
                 $source->getCurrency()->getISOCode(),
-                $sourceType ?? ''
+                $sourceType ?? '',
+                BuilderFactory::BUILDER_CE
             );
             $output->writeln("<info>Imported $result items</info>");
         }
